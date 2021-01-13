@@ -42,7 +42,7 @@
 
 
     .board-bar {
-      background: rgba(gray, 0.5);
+      background: rgba(gray, 0.4);
       padding: 8px 15px;
 
       .board-name {
@@ -58,12 +58,34 @@
     .new {
       display: flex;
       justify-content: space-evenly;
+      background-color: rgba(gray, 0.2);
+
+      @media (max-width: 1000px) {
+        flex-direction: column;
+        align-items: center;
+      }
 
       .newTask, .newColumn {
         display: flex;
         justify-content: center;
+        align-items: center;
         width: 100%;
         padding-top: 25px;
+
+        @media (max-width: 1000px) {
+          padding: 0;
+        }
+
+        @media (max-width: 515px) {
+          flex-direction: column;
+        }
+
+        .newTitle {
+
+          @media (max-width: 515px) {
+            margin: 2px;
+          }
+        }
 
         .input-container {
           display: flex;
@@ -116,6 +138,12 @@
           &:active {
             background-color: rgba(gray, 0.35);
             box-shadow: none;
+          }
+
+
+
+          @media (max-width: 515px) {
+            margin: 5px;
           }
         }
       }
