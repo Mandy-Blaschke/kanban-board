@@ -1,0 +1,72 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+
+<div class="root">
+
+  <div class="board">
+
+    <div class="board-bar">
+      <p class="board-name">Kanban Board</p>
+    </div>
+
+    <div class="new">
+
+      <div class="newTask">
+        <h2>Neue Aufgabe: </h2>
+
+        <div class="input-container">
+          <img class="icon pencil" src="assets/pencil.webp" alt="pencil icon">
+          <input type="text" id="newTask" [(ngModel)]="newTask">
+        </div>
+
+        <button (click)="addNewTask(newTask)">Hinzufügen</button>
+
+      </div>
+
+      <div class="newColumn">
+        <h2>Neue Spalte: </h2>
+
+        <div class="input-container">
+          <img class="icon table" src="assets/table.webp" alt="table icon">
+          <input type="text" id="newColumn" [(ngModel)]="newColumnName">
+        </div>
+
+        <button (click)="addNewColumn()">Hinzufügen</button>
+
+      </div>
+
+    </div>
+
+    <div class="board-wrapper">
+
+      <div class="board-columns"
+           cdkDropListGroup>
+
+        <div class="board-column" *ngFor="let column of board.columns">
+          <div class="delete" (click)="deleteColumn(column.name)">X</div>
+
+          <div class="column-title">
+            {{column.name}}
+          </div>
+
+          <div class="tasks-container"
+               cdkDropList
+               [cdkDropListData]="column.tasks"
+               (cdkDropListDropped)="drop($event)"
+          >
+
+            <div class="task" cdkDrag *ngFor="let item of column.tasks">
+              <div class="delete" (click)="deleteTask(item)">X</div>
+              {{item}}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

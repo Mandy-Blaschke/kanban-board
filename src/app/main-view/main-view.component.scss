@@ -1,0 +1,211 @@
+@mixin delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 800;
+  background-color: #ffe0e0;
+  color: #f55959;
+  width: 15px;
+  height: 15px;
+  padding: 2px;
+  border-radius: 50%;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .board {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 70vh;
+    background-image: radial-gradient(circle at center center, transparent, rgb(124, 255, 240)),
+    linear-gradient(383deg, rgba(198, 198, 198, 0.05) 0%, rgba(198, 198, 198, 0.05) 50%, rgba(11, 11, 11, 0.05) 50%, rgba(11, 11, 11, 0.05) 100%),
+    linear-gradient(147deg, rgba(54, 54, 54, 0.05) 0%, rgba(54, 54, 54, 0.05) 50%, rgba(132, 132, 132, 0.05) 50%, rgba(132, 132, 132, 0.05) 100%),
+    linear-gradient(100deg, rgba(57, 57, 57, 0.05) 0%, rgba(57, 57, 57, 0.05) 50%, rgba(128, 128, 128, 0.05) 50%, rgba(128, 128, 128, 0.05) 100%),
+    linear-gradient(415deg, rgba(97, 97, 97, 0.05) 0%, rgba(97, 97, 97, 0.05) 50%, rgba(85, 85, 85, 0.05) 50%, rgba(85, 85, 85, 0.05) 100%),
+    linear-gradient(231deg, rgba(237, 237, 237, 0.05) 0%, rgba(237, 237, 237, 0.05) 50%, rgba(211, 211, 211, 0.05) 50%, rgba(211, 211, 211, 0.05) 100%),
+    linear-gradient(225deg, rgba(168, 168, 168, 0.05) 0%, rgba(168, 168, 168, 0.05) 50%, rgba(32, 32, 32, 0.05) 50%, rgba(32, 32, 32, 0.05) 100%),
+    linear-gradient(98deg, rgba(225, 225, 225, 0.05) 0%, rgba(225, 225, 225, 0.05) 50%, rgba(228, 228, 228, 0.05) 50%, rgba(228, 228, 228, 0.05) 100%),
+    linear-gradient(88deg, rgba(104, 104, 104, 0.05) 0%, rgba(104, 104, 104, 0.05) 50%, rgba(43, 43, 43, 0.05) 50%, rgba(43, 43, 43, 0.05) 100%),
+    radial-gradient(circle at center center, rgb(169, 247, 182), rgb(169, 247, 182));
+
+
+    .board-bar {
+      background: rgba(gray, 0.5);
+      padding: 8px 15px;
+
+      .board-name {
+        margin: 15px;
+        text-align: center;
+        color: white;
+        font-size: 35px;
+        font-weight: bold;
+        text-shadow: 0 0 2px black;
+      }
+    }
+
+    .new {
+      display: flex;
+      justify-content: space-evenly;
+
+      .newTask, .newColumn {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding-top: 25px;
+
+        .input-container {
+          display: flex;
+          align-self: center;
+          position: relative;
+          margin: 0 25px;
+
+          .pencil, .table {
+            position: absolute;
+            top: 3px;
+            right: 5px;
+            width: 15px;
+            height: 15px;
+            background-color: white;
+          }
+
+          label {
+            margin-right: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: start;
+
+            input {
+              border: none;
+              outline: none;
+              margin: 5px 0;
+              padding: 5px;
+            }
+          }
+        }
+
+        button {
+          align-self: center;
+          outline: none;
+          border: 1px solid #646464;
+          padding: 7px;
+          border-radius: 20px;
+          box-shadow: 0 0 3px gray;
+          height: fit-content;
+          color: white;
+          text-shadow: 0 0 2px black;
+          font-size: 15px;
+          font-weight: bold;
+          background-color: rgba(gray, 0.25);
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          &:active {
+            background-color: rgba(gray, 0.35);
+            box-shadow: none;
+          }
+        }
+      }
+    }
+
+    .board-wrapper {
+      display: flex;
+      flex-grow: 1;
+      overflow-x: auto;
+      height: 500px;
+
+      .board-columns {
+        display: flex;
+        flex-grow: 1;
+
+        .board-column {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+          // alle Spalten gleiche Breite, unabhängig vom Inhalt
+          flex-basis: 0;
+          background: rgba(white, 0.5);
+          min-width: 250px;
+          margin: 25px;
+          padding: 25px;
+          border-radius: 4px;
+
+          .delete {
+            @include delete;
+          }
+
+          &:not(:first-child) {
+            margin-left: 0;
+          }
+
+          .column-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+          }
+
+          .tasks-container {
+            flex-grow: 1;
+
+            .task {
+              position: relative;
+              display: flex;
+              padding: 15px;
+              margin-bottom: 15px;
+              background-color: white;
+              border-bottom: solid 1px #ddd;
+              border-radius: 4px;
+              box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 3px 14px 2px rgba(0, 0, 0, 0.2);
+              cursor: move;
+
+              .delete {
+                @include delete;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  display: flex;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: white;
+  border-bottom: solid 1px #ddd;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
