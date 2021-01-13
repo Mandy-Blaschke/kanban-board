@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {Board} from '../models/board.model';
+import {MainService} from './main.service';
 
 @Component({
   selector: 'app-main-view',
@@ -9,35 +10,37 @@ import {Board} from '../models/board.model';
 })
 export class MainViewComponent implements OnInit {
 
-  constructor() {
+  constructor(private main: MainService) {
   }
 
   newTask = '';
-
+  newColumnName = '';
   board: Board = {
-    name: 'Test',
+    name: 'Kanban Board',
     columns: [
       {
         name: 'TODO',
-        tasks: ['test1'],
+        tasks: [],
       },
       {
         name: 'WIP',
-        tasks: ['test2'],
+        tasks: [],
       },
       {
         name: 'DONE',
-        tasks: ['test3'],
+        tasks: [],
       }
     ]
   };
 
-  newColumnName = '';
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const board = await this.main.load();
+    if (board !== null) {
+      this.board = board;
+    }
   }
 
-  drop(event: CdkDragDrop<string[]>): void {
+  async drop(event: CdkDragDrop<string[]>): Promise<void> {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -46,16 +49,18 @@ export class MainViewComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+    await this.main.save(this.board);
   }
 
-  addNewTask(newTask: string): void {
+  async addNewTask(newTask: string): Promise<void> {
     if (newTask.length > 0) {
       this.board.columns[0].tasks.push(newTask);
+      await this.main.save(this.board);
     }
     this.newTask = '';
   }
 
-  addNewColumn(): void {
+  async addNewColumn(): Promise<void> {
     if (this.newColumnName.length > 0) {
       this.board.columns.push(
         {
@@ -63,25 +68,28 @@ export class MainViewComponent implements OnInit {
           tasks: [],
         }
       );
+      await this.main.save(this.board);
     }
     this.newColumnName = '';
   }
 
-  deleteTask(item: string): void {
-    for (const col of this.board.columns){
+  async deleteTask(item: string): Promise<void> {
+    for (const col of this.board.columns) {
       for (const task of col.tasks) {
-        if (item === task){
+        if (item === task) {
           col.tasks.splice(col.tasks.indexOf(item), 1);
         }
       }
     }
+    await this.main.save(this.board);
   }
 
-  deleteColumn(columnName: string): void {
-    for (const col of this.board.columns){
-        if (col.name === columnName){
-          this.board.columns.splice(this.board.columns.indexOf(col), 1);
-        }
+  async deleteColumn(columnName: string): Promise<void> {
+    for (const col of this.board.columns) {
+      if (col.name === columnName) {
+        this.board.columns.splice(this.board.columns.indexOf(col), 1);
+      }
     }
+    await this.main.save(this.board);
   }
 }
