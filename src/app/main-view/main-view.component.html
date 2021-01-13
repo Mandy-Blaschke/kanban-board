@@ -54,7 +54,7 @@
                (cdkDropListDropped)="drop($event)"
           >
 
-            <div class="task" cdkDrag *ngFor="let item of column.tasks">
+            <div class="task" cdkDrag (cdkDragStarted)="currentlyChanging = true" (cdkDragReleased)="currentlyChanging = false" *ngFor="let item of column.tasks">
               <div class="delete" (click)="deleteTask(item)">X</div>
               {{item}}
             </div>

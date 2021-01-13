@@ -10,6 +10,8 @@ import {MainService} from './main.service';
 })
 export class MainViewComponent implements OnInit {
 
+  currentlyChanging = false;
+
   constructor(private main: MainService) {
   }
 
@@ -34,8 +36,13 @@ export class MainViewComponent implements OnInit {
   };
 
   async ngOnInit(): Promise<void> {
+    await this.loadBoard();
+    setInterval(() => this.loadBoard(), 1000);
+  }
+
+  private async loadBoard(): Promise<void> {
     const board = await this.main.load();
-    if (board !== null) {
+    if (board !== null && !this.currentlyChanging) {
       this.board = board;
     }
   }
