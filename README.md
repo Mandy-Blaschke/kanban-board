@@ -1,6 +1,5 @@
 # Kanban-Board
 
-***WIP***
 - Erstellung im Rahmen meines Selbststudiums
 - erster Versuch mit Drag&Drop
 - erstes Projekt mit Speicherung im Backend

@@ -4,12 +4,11 @@ import {MainViewComponent} from './main-view/main-view.component';
 
 
 const routes: Routes = [
-//  {path: '', pathMatch: 'full', redirectTo: ''},
   {path: '', component: MainViewComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
