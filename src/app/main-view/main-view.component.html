@@ -15,7 +15,7 @@
 
         <div class="input-container">
           <img class="icon pencil" src="assets/pencil.webp" alt="pencil icon">
-          <input type="text" id="newTask" [(ngModel)]="newTask">
+          <input type="text" id="newTask" placeholder="Aufgabentext" [(ngModel)]="newTask">
         </div>
 
         <button (click)="addNewTask(newTask)">Hinzufügen</button>
@@ -27,7 +27,7 @@
 
         <div class="input-container">
           <img class="icon table" src="assets/table.webp" alt="table icon">
-          <input type="text" id="newColumn" [(ngModel)]="newColumnName">
+          <input type="text" id="newColumn" placeholder="Spaltenname" [(ngModel)]="newColumnName">
         </div>
 
         <button (click)="addNewColumn()">Hinzufügen</button>
